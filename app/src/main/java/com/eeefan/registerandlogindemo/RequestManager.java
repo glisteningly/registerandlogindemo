@@ -14,7 +14,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.stetho.okhttp.StethoInterceptor;
 import com.google.gson.Gson;
+import com.squareup.okhttp.OkHttpClient;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,13 +36,18 @@ public class RequestManager {
     private synchronized static void initRequestQueue() {
         if (mRequestQueue == null) {
             //创建一个请求队列
-            mRequestQueue = Volley.newRequestQueue(ItLanbaoLibApplication.getInstance());
+//            mRequestQueue = Volley.newRequestQueue(ItLanbaoLibApplication.getInstance());
+            OkHttpClient okHttpClient = new OkHttpClient();
+            okHttpClient.networkInterceptors().add(new StethoInterceptor());
+            mRequestQueue = Volley.newRequestQueue(ItLanbaoLibApplication.getInstance(), new OkHttpStack(okHttpClient));
+//            mRequestQueue = Volley.newRequestQueue(this, new OkHttpStack(okHttpClient));
         }
     }
 
 
     /**
      * 添加请求到请求队列中
+     *
      * @param request
      * @param tag
      */
@@ -54,11 +61,11 @@ public class RequestManager {
     /**
      * post 请求数据
      *
-     * @param app_url     公共的接口前缀 http://www.itlanbao.com/api/app/
-     * @param tag_url     接口名称，eg:users/user_register_Handler.ashx(注册接口)
-     * @param parameter  请求参数封装对象
-     * @param clazz      返回数据封装对象，如果传null，则直接返回String
-     * @param callback   接口回调监听
+     * @param app_url   公共的接口前缀 http://www.itlanbao.com/api/app/
+     * @param tag_url   接口名称，eg:users/user_register_Handler.ashx(注册接口)
+     * @param parameter 请求参数封装对象
+     * @param clazz     返回数据封装对象，如果传null，则直接返回String
+     * @param callback  接口回调监听
      */
     public static <T> void post(final String app_url, final String tag_url, final HashMap<String, String> parameter, Class<T> clazz,
                                 final HttpResponeCallBack callback) {
@@ -70,12 +77,12 @@ public class RequestManager {
     /**
      * post 请求数据
      *
-     * @param app_url    路径
-     * @param url        接口名称
-     * @param parameter  请求参数封装对象
-     * @param clazz      返回数据封装对象，如果传null，则直接返回String
-     * @param callback   接口回调监听
-     * @param priority   指定接口请求线程优先级
+     * @param app_url   路径
+     * @param url       接口名称
+     * @param parameter 请求参数封装对象
+     * @param clazz     返回数据封装对象，如果传null，则直接返回String
+     * @param callback  接口回调监听
+     * @param priority  指定接口请求线程优先级
      */
     public static <T> void post(final String app_url, final String url, final HashMap<String, String> parameter, final Class<T> clazz,
                                 final HttpResponeCallBack callback, Priority priority) {

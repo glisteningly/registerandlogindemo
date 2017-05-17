@@ -1,9 +1,8 @@
 package com.eeefan.registerandlogindemo;
- 
- 
- 
+
 
 import android.app.Application;
+import com.facebook.stetho.Stetho;
 
 
 public class ItLanbaoLibApplication extends Application{
@@ -11,11 +10,13 @@ public class ItLanbaoLibApplication extends Application{
 	private static ItLanbaoLibApplication instance;
 	 
 
-	 
-	
 	@Override
 	public void onCreate() {
-		super.onCreate(); 
+		super.onCreate();
+		Stetho.initializeWithDefaults(this);
+//        OkHttpClient okHttpClient = new OkHttpClient();
+//        okHttpClient.networkInterceptors().add(new StethoInterceptor());
+//        mRequestQueue = Volley.newRequestQueue(this, new OkHttpStack(okHttpClient));
 		setInstance(this); 
       
 	} 

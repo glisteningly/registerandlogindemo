@@ -20,7 +20,7 @@ public class WelcomeActiviy extends Activity implements HttpResponeCallBack {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome_activiy);
+        setContentView(R.layout.activity_welcome);
 
         iv = (ImageView) this.findViewById(R.id.logo);
 
