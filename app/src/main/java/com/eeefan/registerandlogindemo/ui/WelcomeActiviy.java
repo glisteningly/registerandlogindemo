@@ -1,4 +1,4 @@
-package com.example.registerandlogindemo;
+package com.eeefan.registerandlogindemo.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.Toast;
+import com.eeefan.registerandlogindemo.*;
 
 /**
  * 欢迎界面

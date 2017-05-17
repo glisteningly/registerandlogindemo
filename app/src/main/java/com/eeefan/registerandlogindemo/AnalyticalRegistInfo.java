@@ -1,27 +1,20 @@
-package com.example.registerandlogindemo;
+package com.eeefan.registerandlogindemo;
 
 import java.io.Serializable;
 
 /**
  * @author itlanbao
  * IT蓝豹
- * 解析获取用户基本信息
+ * 解析注册接口数据
  */
-public class UserBaseInfo implements Serializable{
-
-//	 {"ret":"0","errcode":"0","msg":"接口调用成功","nickname":"erom","userhead":"/img/users/head/avatar.png",
-//	"userid":"11653","email":"123456789@qq.com","role":"0"}
-	private String userid;//用户id
+public class AnalyticalRegistInfo implements Serializable{
+	private String ret;//0 ：数据返回成功 1 ：数据返回失败 
+	private String errcode;// errcode错误码类型
+	private String msg;//错误信息
 	private String nickname;//昵称
-	private String userhead;//用户头像路径 
+	private String userhead;//用户头像路径
+	private int userid;//用户id
 	private String email;//用户邮件
-	private String ret;//请求状态码
-	private String errcode;//错误码
-	private String msg;
-	
-	private String role;//角色 是不是管理员
-	
-	
 	
 	
 	public String getRet() {
@@ -42,19 +35,6 @@ public class UserBaseInfo implements Serializable{
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-	public String getRole() {
-		return role;
-	}
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	public String getUserid() {
-		return userid;
-	}
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
 	public String getNickname() {
 		return nickname;
 	}
@@ -67,12 +47,19 @@ public class UserBaseInfo implements Serializable{
 	public void setUserhead(String userhead) {
 		this.userhead = userhead;
 	}
+	public int getUserid() {
+		return userid;
+	}
+	public void setUserid(int userid) {
+		this.userid = userid;
+	}
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
- 
+
+	
 
 }

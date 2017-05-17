@@ -1,7 +1,8 @@
-package com.example.registerandlogindemo;
+package com.eeefan.registerandlogindemo.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import com.eeefan.registerandlogindemo.R;
 
 public class MainActivity extends Activity {
 

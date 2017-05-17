@@ -1,4 +1,4 @@
-package com.example.registerandlogindemo;
+package com.eeefan.registerandlogindemo;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

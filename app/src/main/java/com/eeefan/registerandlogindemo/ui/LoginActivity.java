@@ -1,4 +1,4 @@
-package com.example.registerandlogindemo;
+package com.eeefan.registerandlogindemo.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.eeefan.registerandlogindemo.*;
 
 public class LoginActivity extends Activity implements HttpResponeCallBack {
 

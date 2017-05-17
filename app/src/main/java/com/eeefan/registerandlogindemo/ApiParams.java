@@ -2,7 +2,7 @@
  * Created by Storm Zhang, Feb 13, 2014.
  */
 
-package com.example.registerandlogindemo;
+package com.eeefan.registerandlogindemo;
 
 import java.util.HashMap;
 

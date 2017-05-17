@@ -1,4 +1,4 @@
-package com.example.registerandlogindemo;
+package com.eeefan.registerandlogindemo;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;

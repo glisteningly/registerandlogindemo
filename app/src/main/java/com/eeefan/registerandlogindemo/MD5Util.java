@@ -1,4 +1,4 @@
-package com.example.registerandlogindemo;
+package com.eeefan.registerandlogindemo;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

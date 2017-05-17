@@ -2,7 +2,7 @@
  * Created by Storm Zhang, Feb 11, 2014.
  */
 
-package com.example.registerandlogindemo;
+package com.eeefan.registerandlogindemo;
 
 import com.android.volley.Request;
 import com.android.volley.Request.Method;

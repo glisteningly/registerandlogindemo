@@ -1,4 +1,4 @@
-package com.example.registerandlogindemo;
+package com.eeefan.registerandlogindemo;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

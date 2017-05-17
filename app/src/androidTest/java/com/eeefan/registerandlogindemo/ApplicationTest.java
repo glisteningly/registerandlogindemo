@@ -1,4 +1,4 @@
-package com.example.registerandlogindemo;
+package com.eeefan.registerandlogindemo;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

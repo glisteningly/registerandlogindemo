@@ -1,4 +1,4 @@
-package com.example.registerandlogindemo;
+package com.eeefan.registerandlogindemo;
 
 /**
  * @author wjl IT蓝豹 ItLanBaoApplication主要作用是处理一些app全局变量，
