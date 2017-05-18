@@ -1,6 +1,5 @@
-package com.eeefan.registerandlogindemo.ui;
+package com.eeefan.registerandlogindemo.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,11 +8,12 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.eeefan.registerandlogindemo.*;
+import com.eeefan.registerandlogindemo.base.BaseActivity;
 
 /**
  * 欢迎界面
  */
-public class WelcomeActiviy extends Activity implements HttpResponeCallBack {
+public class WelcomeActivity extends BaseActivity implements HttpResponeCallBack {
 
     private ImageView iv;
 
@@ -44,18 +44,20 @@ public class WelcomeActiviy extends Activity implements HttpResponeCallBack {
                 String userAccount = UserPreference.read(KeyConstance.IS_USER_ACCOUNT, null);//软件还没有保持账号
                 String userPassword = UserPreference.read(KeyConstance.IS_USER_PASSWORD, null);
                 String userid = UserPreference.read(KeyConstance.IS_USER_ID, null);
+                boolean isLogin = UserPreference.read(KeyConstance.IS_LOGIN_KEY, false);
 
-                if (TextUtils.isEmpty(userAccount)) {//没有保存的登录信息跳转到登录界面
+                if (!isLogin || TextUtils.isEmpty(userAccount)) {//没有保存的登录信息跳转到登录界面
                     //空的，表示没有注册，或者清除数据
                     Intent intent = new Intent();
-                    intent.setClass(WelcomeActiviy.this, LoginActivity.class);
+                    intent.setClass(WelcomeActivity.this, LoginActivity.class);
                     startActivity(intent);
-                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+//                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
                 } else {
                     //用保存的信息直接登录
                     RequestApiData.getInstance().getLoginData(userAccount, userPassword,
-                            UserBaseInfo.class, WelcomeActiviy.this);
+                            UserBaseInfo.class, WelcomeActivity.this);
 
                 }
             }
@@ -74,7 +76,7 @@ public class WelcomeActiviy extends Activity implements HttpResponeCallBack {
 
     @Override
     public void onLoading(String apiName, long count, long current) {
-        Toast.makeText(WelcomeActiviy.this, "Loading...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(WelcomeActivity.this, "Loading...", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -87,14 +89,14 @@ public class WelcomeActiviy extends Activity implements HttpResponeCallBack {
                 UserPreference.save(KeyConstance.IS_USER_ID, String.valueOf(info.getUserid()));
 
                 Intent intent = new Intent();
-                intent.setClass(WelcomeActiviy.this, MainActivity.class);
+                intent.setClass(WelcomeActivity.this, MainActivity.class);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.slide_in_left,
                         android.R.anim.slide_out_right);
                 finish();
 
             } else {
-                Toast.makeText(WelcomeActiviy.this, "加载失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(WelcomeActivity.this, "加载失败", Toast.LENGTH_SHORT).show();
             }
         } else if (UrlConstance.KEY_LOGIN_INFO.equals(apiName)) {//当前接口是登录的接口
             //登录返回数据
@@ -106,14 +108,14 @@ public class WelcomeActiviy extends Activity implements HttpResponeCallBack {
                     UserPreference.save(KeyConstance.IS_USER_ID, String.valueOf(info.getUserid()));
 
                     Intent intent = new Intent();
-                    intent.setClass(WelcomeActiviy.this, MainActivity.class);
+                    intent.setClass(WelcomeActivity.this, MainActivity.class);
                     startActivity(intent);
                     overridePendingTransition(android.R.anim.slide_in_left,
                             android.R.anim.slide_out_right);
                     finish();
 
                 } else {
-                    Toast.makeText(WelcomeActiviy.this, info.getMsg(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WelcomeActivity.this, info.getMsg(), Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -121,6 +123,6 @@ public class WelcomeActiviy extends Activity implements HttpResponeCallBack {
 
     @Override
     public void onFailure(String apiName, Throwable t, int errorNo, String strMsg) {
-        Toast.makeText(WelcomeActiviy.this, "Failure", Toast.LENGTH_SHORT).show();
+        Toast.makeText(WelcomeActivity.this, "Failure", Toast.LENGTH_SHORT).show();
     }
 }

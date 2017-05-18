@@ -1,14 +1,12 @@
-package com.eeefan.registerandlogindemo.ui;
+package com.eeefan.registerandlogindemo.base;
 
 import android.app.Activity;
 import android.os.Bundle;
-import com.eeefan.registerandlogindemo.R;
 
-public class MainActivity extends Activity {
-
+public class BaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
     }
+
 }

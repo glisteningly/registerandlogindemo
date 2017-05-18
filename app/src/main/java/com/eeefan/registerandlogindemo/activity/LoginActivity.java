@@ -1,6 +1,5 @@
-package com.eeefan.registerandlogindemo.ui;
+package com.eeefan.registerandlogindemo.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,8 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.eeefan.registerandlogindemo.*;
+import com.eeefan.registerandlogindemo.base.BaseActivity;
 
-public class LoginActivity extends Activity implements HttpResponeCallBack {
+public class LoginActivity extends BaseActivity implements HttpResponeCallBack {
 
     private EditText loginAccount;//账号
     private EditText loginPassword;//密码
@@ -34,6 +34,15 @@ public class LoginActivity extends Activity implements HttpResponeCallBack {
         loginPassword = (EditText) findViewById(R.id.login_password);
         loginBtn = (Button) findViewById(R.id.login_btn);
         registerBtn = (Button) findViewById(R.id.register_btn);
+
+        String userAccount = UserPreference.read(KeyConstance.IS_USER_ACCOUNT, null);//软件还没有保持账号
+        String userPassword = UserPreference.read(KeyConstance.IS_USER_PASSWORD, null);
+
+        if(!TextUtils.isEmpty(userAccount)){
+            loginAccount.setText(userAccount);
+            loginPassword.setText(userPassword);
+        }
+
         //点击登录按钮
         loginBtn.setOnClickListener(new Button.OnClickListener() {
 
@@ -55,9 +64,10 @@ public class LoginActivity extends Activity implements HttpResponeCallBack {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, com.eeefan.registerandlogindemo.activity.RegisterActivity.class);
                 LoginActivity.this.startActivity(intent);
-                finish();
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                finish();
             }
         });
     }
@@ -94,13 +104,14 @@ public class LoginActivity extends Activity implements HttpResponeCallBack {
 
                     UserPreference.save(KeyConstance.IS_USER_ACCOUNT, info.getEmail());
                     UserPreference.save(KeyConstance.IS_USER_PASSWORD, loginPassword.getText().toString());
+                    UserPreference.save(KeyConstance.IS_LOGIN_KEY, true);
 
 
                     Intent intent = new Intent();
-                    intent.setClass(LoginActivity.this, MainActivity.class);
+                    intent.setClass(LoginActivity.this, com.eeefan.registerandlogindemo.activity.MainActivity.class);
                     startActivity(intent);
-                    overridePendingTransition(android.R.anim.slide_in_left,
-                            android.R.anim.slide_out_right);
+//                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
 
                 } else {
@@ -124,4 +135,6 @@ public class LoginActivity extends Activity implements HttpResponeCallBack {
         // TODO Auto-generated method stub
         Toast.makeText(LoginActivity.this, "Failure", Toast.LENGTH_SHORT).show();   
     }
+
+
 }

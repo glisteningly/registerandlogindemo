@@ -1,6 +1,5 @@
-package com.eeefan.registerandlogindemo.ui;
+package com.eeefan.registerandlogindemo.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,8 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.eeefan.registerandlogindemo.*;
+import com.eeefan.registerandlogindemo.base.BaseActivity;
 
-public class RegisterActivity extends Activity implements HttpResponeCallBack {
+public class RegisterActivity extends BaseActivity implements HttpResponeCallBack {
 
     private EditText loginNick;//用户昵称
     private EditText email;//注册邮箱
@@ -87,9 +87,10 @@ public class RegisterActivity extends Activity implements HttpResponeCallBack {
                     UserPreference.save(KeyConstance.IS_USER_ID, String.valueOf(info.getUserid()));
                     UserPreference.save(KeyConstance.IS_USER_ACCOUNT, info.getEmail());
                     UserPreference.save(KeyConstance.IS_USER_PASSWORD, password.getText().toString());
+                    UserPreference.save(KeyConstance.IS_LOGIN_KEY, true);
 
 
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    Intent intent = new Intent(RegisterActivity.this, com.eeefan.registerandlogindemo.activity.MainActivity.class);
                     RegisterActivity.this.startActivity(intent);
 
                     Toast.makeText(RegisterActivity.this, "注册成功...", Toast.LENGTH_SHORT).show();
@@ -107,5 +108,11 @@ public class RegisterActivity extends Activity implements HttpResponeCallBack {
     @Override
     public void onFailure(String apiName, Throwable t, int errorNo, String strMsg) {
         Toast.makeText(RegisterActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onPause() {
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        super.onPause();
     }
 }

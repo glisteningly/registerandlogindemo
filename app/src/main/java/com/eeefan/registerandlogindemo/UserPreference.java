@@ -18,11 +18,26 @@ public class UserPreference {
     public static void save(String key, String value) {
         Editor editor = ensureIntializePreference().edit();
         editor.putString(key, value);
-        editor.commit(); 
+        editor.apply();
+    }
+    public static void save(String key, boolean value) {
+        Editor editor = ensureIntializePreference().edit();
+        editor.putBoolean(key, value);
+        editor.apply();
     }
 
     public static String read(String key, String defaultvalue) {
         return ensureIntializePreference().getString(key, defaultvalue);
+    }
+
+    public static boolean read(String key, boolean defaultvalue) {
+        return ensureIntializePreference().getBoolean(key, defaultvalue);
+    }
+
+    public static void del(String key){
+        Editor editor = ensureIntializePreference().edit();
+        editor.remove(key);
+        editor.apply();
     }
     
 }
