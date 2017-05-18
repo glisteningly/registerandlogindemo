@@ -1,4 +1,4 @@
-package com.eeefan.registerandlogindemo;
+package com.eeefan.registerandlogindemo.http;
  
 /**
  * @author itlanbao

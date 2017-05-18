@@ -1,14 +1,17 @@
-package com.eeefan.registerandlogindemo;
+package com.eeefan.registerandlogindemo.base;
+
+import com.eeefan.registerandlogindemo.http.RequestApiData;
+import com.eeefan.registerandlogindemo.utils.UserBaseInfo;
 
 /**
  * @author wjl IT蓝豹 ItLanBaoApplication主要作用是处理一些app全局变量，
  */
-public class ItLanBaoApplication extends ItLanbaoLibApplication {
+public class BaseApplication extends BaseLibApplication {
 
     private UserBaseInfo baseUser;//用户基本信息
 
     private RequestApiData requestApi;
-    private static ItLanBaoApplication instance;
+    private static BaseApplication instance;
 
     // 渠道号
     private String fid = "";
@@ -22,8 +25,8 @@ public class ItLanBaoApplication extends ItLanbaoLibApplication {
         requestApi = RequestApiData.getInstance();
     }
 
-    public static void setInstance(ItLanBaoApplication instance) {
-        ItLanBaoApplication.instance = instance;
+    public static void setInstance(BaseApplication instance) {
+        BaseApplication.instance = instance;
     }
 
 
@@ -46,7 +49,7 @@ public class ItLanBaoApplication extends ItLanbaoLibApplication {
      *
      * @return
      */
-    public static ItLanBaoApplication getInstance() {
+    public static BaseApplication getInstance() {
         return instance;
     }
 

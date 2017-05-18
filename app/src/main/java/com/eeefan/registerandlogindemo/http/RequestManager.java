@@ -2,7 +2,7 @@
  * Created by Storm Zhang, Feb 11, 2014.
  */
 
-package com.eeefan.registerandlogindemo;
+package com.eeefan.registerandlogindemo.http;
 
 import com.android.volley.Request;
 import com.android.volley.Request.Method;
@@ -14,6 +14,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.eeefan.registerandlogindemo.base.BaseLibApplication;
+import com.eeefan.registerandlogindemo.http.ApiParams;
+import com.eeefan.registerandlogindemo.http.HttpResponeCallBack;
+import com.eeefan.registerandlogindemo.http.OkHttpStack;
+import com.eeefan.registerandlogindemo.utils.NetworkUtils;
 import com.facebook.stetho.okhttp.StethoInterceptor;
 import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
@@ -36,10 +41,10 @@ public class RequestManager {
     private synchronized static void initRequestQueue() {
         if (mRequestQueue == null) {
             //创建一个请求队列
-//            mRequestQueue = Volley.newRequestQueue(ItLanbaoLibApplication.getInstance());
+//            mRequestQueue = Volley.newRequestQueue(BaseLibApplication.getInstance());
             OkHttpClient okHttpClient = new OkHttpClient();
             okHttpClient.networkInterceptors().add(new StethoInterceptor());
-            mRequestQueue = Volley.newRequestQueue(ItLanbaoLibApplication.getInstance(), new OkHttpStack(okHttpClient));
+            mRequestQueue = Volley.newRequestQueue(BaseLibApplication.getInstance(), new OkHttpStack(okHttpClient));
 //            mRequestQueue = Volley.newRequestQueue(this, new OkHttpStack(okHttpClient));
         }
     }
@@ -98,7 +103,7 @@ public class RequestManager {
         builder.append(url);
 
         {// 检查当前网络是否可用
-            final NetworkUtils networkUtils = new NetworkUtils(ItLanbaoLibApplication.getInstance());
+            final NetworkUtils networkUtils = new NetworkUtils(BaseLibApplication.getInstance());
 
             if (!networkUtils.isNetworkConnected() && android.os.Build.VERSION.SDK_INT > 10) {
                 if (callback != null) {

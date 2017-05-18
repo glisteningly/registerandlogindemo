@@ -1,4 +1,4 @@
-package com.eeefan.registerandlogindemo;
+package com.eeefan.registerandlogindemo.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
  * @author Administrator
  * 工具类
  */
-public class Utils {
+public class ValidateUtils {
 
     public static boolean isEmail(String email){   
     	

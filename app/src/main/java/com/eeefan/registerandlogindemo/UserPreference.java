@@ -2,6 +2,7 @@ package com.eeefan.registerandlogindemo;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import com.eeefan.registerandlogindemo.base.BaseLibApplication;
 
 
 public class UserPreference {
@@ -10,7 +11,7 @@ public class UserPreference {
     
     public static SharedPreferences ensureIntializePreference() {
         if (mUserPreferences == null) {
-            mUserPreferences = ItLanbaoLibApplication.getInstance().getSharedPreferences(USER_PREFERENCE, 0);
+            mUserPreferences = BaseLibApplication.getInstance().getSharedPreferences(USER_PREFERENCE, 0);
         }
         return mUserPreferences;
     }

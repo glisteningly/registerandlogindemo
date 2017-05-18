@@ -9,6 +9,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import com.eeefan.registerandlogindemo.*;
 import com.eeefan.registerandlogindemo.base.BaseActivity;
+import com.eeefan.registerandlogindemo.base.BaseApplication;
+import com.eeefan.registerandlogindemo.http.HttpResponeCallBack;
+import com.eeefan.registerandlogindemo.http.RequestApiData;
+import com.eeefan.registerandlogindemo.utils.UserBaseInfo;
 
 /**
  * 欢迎界面
@@ -25,7 +29,7 @@ public class WelcomeActivity extends BaseActivity implements HttpResponeCallBack
         iv = (ImageView) this.findViewById(R.id.logo);
 
         AlphaAnimation alphaAnimation = new AlphaAnimation(0.2f, 1.0f);
-        alphaAnimation.setDuration(2000);
+        alphaAnimation.setDuration(1000);
         iv.startAnimation(alphaAnimation);
 
         alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
@@ -85,7 +89,7 @@ public class WelcomeActivity extends BaseActivity implements HttpResponeCallBack
         if (UrlConstance.KEY_USER_BASE_INFO.equals(apiName)) {
             if (object != null && object instanceof UserBaseInfo) {
                 UserBaseInfo info = (UserBaseInfo) object;
-                ItLanBaoApplication.getInstance().setBaseUser(info);//把数据放入到Application里面，全局
+                BaseApplication.getInstance().setBaseUser(info);//把数据放入到Application里面，全局
                 UserPreference.save(KeyConstance.IS_USER_ID, String.valueOf(info.getUserid()));
 
                 Intent intent = new Intent();
@@ -104,7 +108,7 @@ public class WelcomeActivity extends BaseActivity implements HttpResponeCallBack
                 UserBaseInfo info = (UserBaseInfo) object;
                 if (Constant.KEY_SUCCESS.equals(info.getRet())) {
 
-                    ItLanBaoApplication.getInstance().setBaseUser(info);//将用户信息保存在Application中
+                    BaseApplication.getInstance().setBaseUser(info);//将用户信息保存在Application中
                     UserPreference.save(KeyConstance.IS_USER_ID, String.valueOf(info.getUserid()));
 
                     Intent intent = new Intent();

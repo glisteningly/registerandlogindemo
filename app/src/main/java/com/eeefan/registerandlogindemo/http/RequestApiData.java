@@ -1,4 +1,9 @@
-package com.eeefan.registerandlogindemo;
+package com.eeefan.registerandlogindemo.http;
+
+import com.eeefan.registerandlogindemo.UrlConstance;
+import com.eeefan.registerandlogindemo.utils.AnalyticalRegistInfo;
+import com.eeefan.registerandlogindemo.utils.MD5Util;
+import com.eeefan.registerandlogindemo.utils.UserBaseInfo;
 
 import java.util.HashMap;
  

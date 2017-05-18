@@ -2,7 +2,7 @@
  * Created by Storm Zhang, Feb 11, 2014.
  */
 
-package com.eeefan.registerandlogindemo;
+package com.eeefan.registerandlogindemo.http;
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 

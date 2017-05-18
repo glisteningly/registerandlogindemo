@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.eeefan.registerandlogindemo.*;
 import com.eeefan.registerandlogindemo.base.BaseActivity;
+import com.eeefan.registerandlogindemo.base.BaseApplication;
+import com.eeefan.registerandlogindemo.utils.UserBaseInfo;
 
 public class MainActivity extends BaseActivity {
 
@@ -33,7 +35,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setUserInfo() {
-        baseInfo = ItLanBaoApplication.getInstance().getBaseUser();
+        baseInfo = BaseApplication.getInstance().getBaseUser();
         userNameTv = (TextView) findViewById(R.id.tv_main_username);
         userNameTv.setText(baseInfo.getNickname());
     }

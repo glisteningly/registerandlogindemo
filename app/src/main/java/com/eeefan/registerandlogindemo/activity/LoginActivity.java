@@ -10,6 +10,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.eeefan.registerandlogindemo.*;
 import com.eeefan.registerandlogindemo.base.BaseActivity;
+import com.eeefan.registerandlogindemo.base.BaseApplication;
+import com.eeefan.registerandlogindemo.http.HttpResponeCallBack;
+import com.eeefan.registerandlogindemo.http.RequestApiData;
+import com.eeefan.registerandlogindemo.utils.UserBaseInfo;
+import com.eeefan.registerandlogindemo.utils.ValidateUtils;
 
 public class LoginActivity extends BaseActivity implements HttpResponeCallBack {
 
@@ -52,7 +57,7 @@ public class LoginActivity extends BaseActivity implements HttpResponeCallBack {
                 String account = loginAccount.getText().toString();//账号
                 String password = loginPassword.getText().toString();//密码
                 if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(password)
-                        && Utils.isEmail(account)) {
+                        && ValidateUtils.isEmail(account)) {
                     RequestApiData.getInstance().getLoginData(account, password, UserBaseInfo.class, LoginActivity.this);
                 } else {
                     Toast.makeText(LoginActivity.this, "账号或者密码有误", Toast.LENGTH_SHORT).show();
@@ -97,7 +102,7 @@ public class LoginActivity extends BaseActivity implements HttpResponeCallBack {
                 if (info.getRet().equals(Constant.KEY_SUCCESS)) {
 
                     //登录成功，保存登录信息
-                    ItLanBaoApplication.getInstance().setBaseUser(info);//保存到Application中
+                    BaseApplication.getInstance().setBaseUser(info);//保存到Application中
 
                     //保存到SP中
                     UserPreference.save(KeyConstance.IS_USER_ID, String.valueOf(info.getUserid()));

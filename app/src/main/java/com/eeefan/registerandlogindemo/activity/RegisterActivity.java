@@ -9,6 +9,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.eeefan.registerandlogindemo.*;
 import com.eeefan.registerandlogindemo.base.BaseActivity;
+import com.eeefan.registerandlogindemo.base.BaseApplication;
+import com.eeefan.registerandlogindemo.http.HttpResponeCallBack;
+import com.eeefan.registerandlogindemo.http.RequestApiData;
+import com.eeefan.registerandlogindemo.utils.AnalyticalRegistInfo;
+import com.eeefan.registerandlogindemo.utils.UserBaseInfo;
+import com.eeefan.registerandlogindemo.utils.ValidateUtils;
 
 public class RegisterActivity extends BaseActivity implements HttpResponeCallBack {
 
@@ -43,7 +49,7 @@ public class RegisterActivity extends BaseActivity implements HttpResponeCallBac
                 if (!TextUtils.isEmpty(nick) &&
                         !TextUtils.isEmpty(emailStr)
                         && !TextUtils.isEmpty(passwordStr)) {
-                    if (Utils.isEmail(emailStr)) {//验证邮箱格式是否符合
+                    if (ValidateUtils.isEmail(emailStr)) {//验证邮箱格式是否符合
 
                         RequestApiData.getInstance().getRegistData(nick, emailStr, passwordStr,
                                 AnalyticalRegistInfo.class, RegisterActivity.this);
@@ -83,7 +89,7 @@ public class RegisterActivity extends BaseActivity implements HttpResponeCallBac
                     baseUser.setNickname(info.getNickname());
                     baseUser.setUserhead(info.getUserhead());
                     baseUser.setUserid(String.valueOf(info.getUserid()));
-                    ItLanBaoApplication.getInstance().setBaseUser(baseUser);
+                    BaseApplication.getInstance().setBaseUser(baseUser);
                     UserPreference.save(KeyConstance.IS_USER_ID, String.valueOf(info.getUserid()));
                     UserPreference.save(KeyConstance.IS_USER_ACCOUNT, info.getEmail());
                     UserPreference.save(KeyConstance.IS_USER_PASSWORD, password.getText().toString());

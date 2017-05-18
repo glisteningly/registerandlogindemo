@@ -1,8 +1,9 @@
-package com.eeefan.registerandlogindemo;
+package com.eeefan.registerandlogindemo.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import com.eeefan.registerandlogindemo.base.BaseLibApplication;
 
 /**
  * 网络相关的工具类
@@ -42,7 +43,7 @@ public class NetworkUtils {
 	public boolean isNetworkConnected() {
 
 	    if (connManager == null) {
-	        connManager = (ConnectivityManager) ItLanbaoLibApplication.getInstance()
+	        connManager = (ConnectivityManager) BaseLibApplication.getInstance()
 	                .getSystemService(Context.CONNECTIVITY_SERVICE);
 	    }
 	    
