@@ -7,6 +7,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.Toast;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.eeefan.registerandlogindemo.*;
 import com.eeefan.registerandlogindemo.base.BaseActivity;
 import com.eeefan.registerandlogindemo.base.BaseApplication;
@@ -19,15 +21,18 @@ import com.eeefan.registerandlogindemo.utils.UserBaseInfo;
  */
 public class WelcomeActivity extends BaseActivity implements HttpResponeCallBack {
 
-    private ImageView iv;
+    @BindView(R.id.logo)
+    ImageView iv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        ButterKnife.bind(this);
+        showLogoAnim();
+    }
 
-        iv = (ImageView) this.findViewById(R.id.logo);
-
+    private void showLogoAnim() {
         AlphaAnimation alphaAnimation = new AlphaAnimation(0.2f, 1.0f);
         alphaAnimation.setDuration(1000);
         iv.startAnimation(alphaAnimation);
@@ -35,7 +40,6 @@ public class WelcomeActivity extends BaseActivity implements HttpResponeCallBack
         alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
             }
 
             /**
@@ -44,33 +48,35 @@ public class WelcomeActivity extends BaseActivity implements HttpResponeCallBack
              */
             @Override
             public void onAnimationEnd(Animation animation) {
-                //暂时用用户名密码登录
-                String userAccount = UserPreference.read(KeyConstance.IS_USER_ACCOUNT, null);//软件还没有保持账号
-                String userPassword = UserPreference.read(KeyConstance.IS_USER_PASSWORD, null);
-                String userid = UserPreference.read(KeyConstance.IS_USER_ID, null);
-                boolean isLogin = UserPreference.read(KeyConstance.IS_LOGIN_KEY, false);
-
-                if (!isLogin || TextUtils.isEmpty(userAccount)) {//没有保存的登录信息跳转到登录界面
-                    //空的，表示没有注册，或者清除数据
-                    Intent intent = new Intent();
-                    intent.setClass(WelcomeActivity.this, LoginActivity.class);
-                    startActivity(intent);
-//                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    finish();
-                } else {
-                    //用保存的信息直接登录
-                    RequestApiData.getInstance().getLoginData(userAccount, userPassword,
-                            UserBaseInfo.class, WelcomeActivity.this);
-
-                }
+                autoLogin();
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
             }
         });
+    }
+
+    private void autoLogin() {
+        //暂时用用户名密码登录
+        String userAccount = UserPreference.read(KeyConstance.IS_USER_ACCOUNT, null);//软件还没有保持账号
+        String userPassword = UserPreference.read(KeyConstance.IS_USER_PASSWORD, null);
+        String userid = UserPreference.read(KeyConstance.IS_USER_ID, null);
+        boolean isLogin = UserPreference.read(KeyConstance.IS_LOGIN_KEY, false);
+
+        if (!isLogin || TextUtils.isEmpty(userAccount)) {//没有保存的登录信息跳转到登录界面
+            //空的，表示没有注册，或者清除数据
+            Intent intent = new Intent();
+            intent.setClass(WelcomeActivity.this, LoginActivity.class);
+            startActivity(intent);
+//                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
+        } else {
+            //用保存的信息直接登录
+            RequestApiData.getInstance().getLoginData(userAccount, userPassword,
+                    UserBaseInfo.class, WelcomeActivity.this);
+        }
     }
 
     @Override

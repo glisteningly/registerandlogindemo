@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.eeefan.registerandlogindemo.*;
 import com.eeefan.registerandlogindemo.base.BaseActivity;
 import com.eeefan.registerandlogindemo.base.BaseApplication;
@@ -18,63 +20,50 @@ import com.eeefan.registerandlogindemo.utils.ValidateUtils;
 
 public class LoginActivity extends BaseActivity implements HttpResponeCallBack {
 
-    private EditText loginAccount;//账号
-    private EditText loginPassword;//密码
-    private Button loginBtn;
-    private Button registerBtn;
+    @BindView(R.id.login_account)
+    EditText loginAccount;
+    @BindView(R.id.login_password)
+    EditText loginPassword;
+    @BindView(R.id.login_btn)
+    Button loginBtn;
+    @BindView(R.id.register_btn)
+    Button registerBtn;
 
     @Override
     protected void onCreate(Bundle arg0) {
-        // TODO Auto-generated method stub
         super.onCreate(arg0);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
         init();
     }
 
-    /**
-     * 初始化数据
-     */
     private void init() {
-        loginAccount = (EditText) findViewById(R.id.login_account);
-        loginPassword = (EditText) findViewById(R.id.login_password);
-        loginBtn = (Button) findViewById(R.id.login_btn);
-        registerBtn = (Button) findViewById(R.id.register_btn);
-
         String userAccount = UserPreference.read(KeyConstance.IS_USER_ACCOUNT, null);//软件还没有保持账号
         String userPassword = UserPreference.read(KeyConstance.IS_USER_PASSWORD, null);
 
-        if(!TextUtils.isEmpty(userAccount)){
+        if (!TextUtils.isEmpty(userAccount)) {
             loginAccount.setText(userAccount);
             loginPassword.setText(userPassword);
         }
+    }
 
-        //点击登录按钮
-        loginBtn.setOnClickListener(new Button.OnClickListener() {
+    @OnClick(R.id.login_btn)
+    public void onLoginBtnClicked() {
+        String account = loginAccount.getText().toString();//账号
+        String password = loginPassword.getText().toString();//密码
+        if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(password)
+                && ValidateUtils.isEmail(account)) {
+            RequestApiData.getInstance().getLoginData(account, password, UserBaseInfo.class, LoginActivity.this);
+        } else {
+            Toast.makeText(LoginActivity.this, "账号或者密码有误", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                String account = loginAccount.getText().toString();//账号
-                String password = loginPassword.getText().toString();//密码
-                if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(password)
-                        && ValidateUtils.isEmail(account)) {
-                    RequestApiData.getInstance().getLoginData(account, password, UserBaseInfo.class, LoginActivity.this);
-                } else {
-                    Toast.makeText(LoginActivity.this, "账号或者密码有误", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        registerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent intent = new Intent(LoginActivity.this, com.eeefan.registerandlogindemo.activity.RegisterActivity.class);
-                LoginActivity.this.startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-//                finish();
-            }
-        });
+    @OnClick(R.id.register_btn)
+    public void onRegisterBtnClicked() {
+        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        LoginActivity.this.startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     @Override
@@ -113,33 +102,33 @@ public class LoginActivity extends BaseActivity implements HttpResponeCallBack {
 
 
                     Intent intent = new Intent();
-                    intent.setClass(LoginActivity.this, com.eeefan.registerandlogindemo.activity.MainActivity.class);
+                    intent.setClass(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
 //                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
 
                 } else {
-                    Log.e("TAG", "info="+info.toString());
+                    Log.e("TAG", "info=" + info.toString());
                     if (info.getErrcode().equals(Constant.KEY_NO_REGIST)) {
                         Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(LoginActivity.this, info.getMsg(), Toast.LENGTH_SHORT).show();
-                        Log.e("TAG", "info.getMsg()="+info.getMsg());
+                        Log.e("TAG", "info.getMsg()=" + info.getMsg());
                     }
 
                 }
             }
         }
-
     }
 
     @Override
     public void onFailure(String apiName, Throwable t, int errorNo,
                           String strMsg) {
         // TODO Auto-generated method stub
-        Toast.makeText(LoginActivity.this, "Failure", Toast.LENGTH_SHORT).show();   
+        Toast.makeText(LoginActivity.this, "Failure", Toast.LENGTH_SHORT).show();
     }
+
 
 
 }
