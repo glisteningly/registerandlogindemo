@@ -5,27 +5,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import com.eeefan.registerandlogindemo.*;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import com.eeefan.registerandlogindemo.KeyConstance;
+import com.eeefan.registerandlogindemo.R;
+import com.eeefan.registerandlogindemo.UserPreference;
 import com.eeefan.registerandlogindemo.base.BaseActivity;
 import com.eeefan.registerandlogindemo.base.BaseApplication;
 import com.eeefan.registerandlogindemo.utils.UserBaseInfo;
 
 public class MainActivity extends BaseActivity {
-
-    private UserBaseInfo baseInfo = null;
-    private TextView userNameTv = null;
-    private Button logoutBtn = null;
+    @BindView(R.id.tv_main_username) TextView userNameTv;
+    @BindView(R.id.btn_main_logout)  Button logoutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         init();
     }
 
     private void init(){
         setUserInfo();
-        logoutBtn = (Button) findViewById(R.id.btn_main_logout);
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -35,8 +37,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setUserInfo() {
-        baseInfo = BaseApplication.getInstance().getBaseUser();
-        userNameTv = (TextView) findViewById(R.id.tv_main_username);
+        UserBaseInfo baseInfo = BaseApplication.getInstance().getBaseUser();
         userNameTv.setText(baseInfo.getNickname());
     }
 
